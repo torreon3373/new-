@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>snowPowder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #main__container {
+            width: 100%;
+            height: 300px;
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-around;
+            transition-duration: 0.1s;
+            transition-timing-function: ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main__container"></div>
+    <script>
+        var winWidth = document.documentElement.clientWidth, //ウィンドウの横幅
+            winHeight = document.documentElement.clientHeight; //ウィンドウの高さ
+
+        var main = document.getElementById('main__container');
+
+        for (var i = 1; i <= 40; i++) {
+            var div = document.createElement('div'); //divを作成
+            main.appendChild(div); //divを追加
+            div.setAttribute('id', 'contents' + zeroPad(i));
+            div.setAttribute('style', 'position:relative; background-color:#fff; border-radius:50%; top:-30px;');
+            randomValue(div);
+        }
+
+        function randomValue(ele) {
+            var multiArray = [1, -1]; //1か-1の配列
+            var randomMulti = multiArray[Math.floor(Math.random() * multiArray.length)]; //1か-1をランダムに取得
+            var maxSize = 9, //最大サイズ
+                minSize = 3, //最小サイズ
+                objSize = getRandomNum(maxSize, minSize), //サイズ 最大〜最小までのランダム値
+                blurValue = getRandomNum(3, 0), //ボカシ量
+                opacityValue = getRandomFloot(0.8, 0.5).toFixed(1), //透明度　※小数点第1位まで取得
+                XSpeedNum = getRandomFloot(2, 0), //Xの移動量
+                YSpeedNum = getRandomFloot(4, 2), //Y座標の移動量
+                ZSpeedNum = getRandomFloot(0.025, 0); //Z座標の移動量
+
+            ele.style.width = objSize + 'px';
+            ele.style.height = objSize + 'px';
+            ele.style.margin = (maxSize - objSize) / 2 + 'px';
+            ele.style.filter = 'blur(' + blurValue + 'px)';
+            ele.style.opacity = opacityValue;
+
+            var YNum = -40;
+            var XNum = 0;
+            var ZNum = 0;
+
+            (function animeLoop() {
+                var requestAnime = window.requestAnimationFrame(animeLoop);
+                XNum += XSpeedNum;
+                YNum += YSpeedNum;
+                ZNum += ZSpeedNum;
+                ele.style.top = YNum + 'px';
+                ele.style.left = XNum * randomMulti + 'px';
+                ele.style.transform = 'scale(' + ZNum + ',' + ZNum + ')';
+
+                if (YNum >= 300) {
+                    window.cancelAnimationFrame(requestAnime);
+                    return randomValue(ele);
+                }
+            })();
+
+            return ele;
+        }
+
+        //////////// 関数 ////////////
+        function zeroPad(zeroNum) { //ゼロパッド取得関数
+            var zeroNum = ('000' + zeroNum).slice(-3);
+            return zeroNum;
+        }
+
+        function getRandomNum(max, min) { //ランダム値取得関数
+            var ranNum = Math.floor(Math.random() * (max + 1 - min) + min);
+            return ranNum
+        }
+
+        function getRandomFloot(max, min) { //ランダム値取得関数 小数点第1位
+            var ranFlootNum = Math.random() * (max - min) + min;
+            return ranFlootNum;
+        }
+
+    </script>
+
+    
+
+<title>One Minute Timer</title>
+        <script type="text/javascript">
+            var timer_ID;                               //【タイマーID】
+            var time = 60;                              // timeの初期化
+
+            function minusTime() {
+                time--;                                 // timeの更新
+                dispTime();                             // timeの表示	
+                if (time==0) {
+                    clearInterval(timer_ID);            //【タイマーの消去】
+                }
+            }
+			
+            function dispTime() {
+                document.getElementsByTagName("output")[0].innerHTML = time;
+            }
+
+            window.onload = function() {
+                dispTime();                                     // timeの表示
+                timer_ID = setInterval("minusTime()", 1000);    //【タイマーの設定】
+            }
+        </script>
+    </head>
+    <body>
+        <output></output>
+    </body>
+</html>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+body {
+    background: url(test.jpg) no-repeat center center fixed #C0C0C0;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
